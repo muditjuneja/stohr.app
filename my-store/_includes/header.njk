@@ -1,0 +1,68 @@
+<nav id="header" class="w-full z-30 top-0 py-1">
+  <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3">
+
+    <label for="menu-toggle" class="cursor-pointer md:hidden block">
+      <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+        viewbox="0 0 20 20">
+        <title>menu</title>
+        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+      </svg>
+    </label>
+    <input class="hidden" type="checkbox" id="menu-toggle" />
+
+    <div class="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
+      <nav>
+        <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
+          <li>
+            <a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/shop/">Shop</a>
+          </li>
+          {% if meta.about %}
+          <li>
+            <a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="#">About</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="order-1 md:order-2">
+      <a class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
+        href="/">
+        <svg class="fill-current text-gray-800 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewbox="0 0 24 24">
+          <path
+            d="M5,22h14c1.103,0,2-0.897,2-2V9c0-0.553-0.447-1-1-1h-3V7c0-2.757-2.243-5-5-5S7,4.243,7,7v1H4C3.447,8,3,8.447,3,9v11 C3,21.103,3.897,22,5,22z M9,7c0-1.654,1.346-3,3-3s3,1.346,3,3v1H9V7z M5,10h2v2h2v-2h6v2h2v-2h2l0.002,10H5V10z" />
+        </svg>
+        {{meta.site_name.toUpperCase()}}
+      </a>
+    </div>
+
+    <!-- <div class="order-3 md:order-3 flex items-center" id="nav-content">
+        <a href="/cart" class="pl-3">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            class="h-6 w-6 text-gray-500 hover:text-black">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293-.511A1 1 0 014 12V4a1 1 0 011-1h16a1 1 0 011 1v8a1 1 0 01-.133.445l-3.6 7.2A1 1 0 0117 21H7a1 1 0 01-1-1v-1a1 1 0 011-1h10a1 1 0 010 2H7">
+            </path>
+          </svg>
+        </a>
+      </div> -->
+
+
+    <div class="order-2 md:order-3 flex items-center" id="nav-content">
+      <div class="order-2 md:order-3 flex items-center" id="nav-content">
+        <a class="inline-block no-underline hover:text-black hover:text-underline text-gray-800 pl-3 relative"
+          id="cartIcon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+          </svg>
+          <span
+            class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full"
+            id="cartCountBadge">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

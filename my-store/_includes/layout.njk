@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ meta.og_title }}</title>
+  <meta name="description" content="{{ meta.description }}">
+  <meta name="keywords" content="{{ meta.keywords }}">
+  <meta property="og:title" content="{{ meta.og_title }}">
+  <meta property="og:description" content="{{ meta.og_description }}">
+  <meta property="og:image" content="{{ meta.og_image }}">
+  <meta property="og:url" content="{{ meta.og_url }}">
+  <meta property="og:type" content="{{ meta.og_type }}">
+  <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
+
+  <style>
+    .work-sans {
+      font-family: 'Work Sans', sans-serif;
+    }
+
+    #menu-toggle:checked+#menu {
+      display: block;
+    }
+
+    .hover\:grow {
+      transition: all 0.3s;
+      transform: scale(1);
+    }
+
+    .hover\:grow:hover {
+      transform: scale(1.02);
+    }
+  </style>
+
+</head>
+
+<body class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal">
+  <!--Nav-->
+
+  {% include "header.njk" %}
+  {% include "cartPartial.njk" %}
+  {{ content | safe }}
+  {% include "footer.njk" %}
+
+</body>
+
+</html>
+
+
+<script>
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const path = location.pathname;
+  console.log('path', path);
+  if (cart.length > 0 && path !== '/checkout/') {
+    showSidebar();
+  } else {
+    closeSidebar();
+  }
+
+  function addToCart(product) {
+    console.log("product", product);
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showSidebar();
+    addItemToSidebar(product.Title, 'Salmon', product.img, cart.length);
+  }
+
+  function rerender() {
+
+    for (let i = 0; i < cart.length; i++) {
+      addItemToSidebar(cart[i].Title, 'Salmon', cart[i].img, i);
+    }
+  }
+
+  function showSidebar() {
+    const sidebar = document.querySelector('.fixed.inset-0.overflow-hidden');
+    const backdrop = document.querySelector('.bg-gray-500.bg-opacity-75');
+
+    sidebar.classList.remove('hidden');
+    backdrop.classList.remove('hidden');
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+
+    // Save the updated cart back to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Re-render the cart
+    rerender();
+  }
+
+  function checkout() {
+    // Checkout logic here
+    console.log('Checkout clicked');
+    location.pathname = '/checkout/';
+  }
+
+
+  function createNewItem(name, color, imgSrc, index) {
+    // Create new elements
+    const listItem = document.createElement('li');
+    const itemImageContainer = document.createElement('div');
+    const itemImage = document.createElement('img');
+    const itemDetails = document.createElement('div');
+    const itemName = document.createElement('h3');
+    const itemColor = document.createElement('p');
+    const removeButtonContainer = document.createElement('div');
+    const removeButton = document.createElement('button');
+
+    // Set attributes and content
+    listItem.classList.add('flex', 'py-6');
+    itemImageContainer.classList.add('h-24', 'w-24', 'flex-shrink-0', 'overflow-hidden', 'rounded-md', 'border', 'border-gray-200');
+    itemImage.src = imgSrc;
+    itemImage.alt = color + ' ' + name;
+    itemImage.classList.add('h-full', 'w-full', 'object-cover', 'object-center');
+    itemDetails.classList.add('ml-4', 'flex', 'flex-1', 'flex-col');
+    itemName.innerHTML = '<a href="#">' + name + '</a>';
+    itemName.classList.add('text-base', 'font-medium', 'text-gray-900');
+    itemColor.textContent = color;
+    itemColor.classList.add('mt-1', 'text-sm', 'text-gray-500');
+    removeButtonContainer.classList.add('flex', 'flex-1', 'items-end', 'justify-between', 'text-sm');
+    removeButton.textContent = 'Remove';
+    removeButton.classList.add('font-medium', 'text-indigo-600', 'hover:text-indigo-500');
+    removeButton.type = 'button';
+
+    // Add event listener to remove button
+    removeButton.addEventListener('click', function () {
+      listItem.remove(index);
+      removeFromCart(index);
+    });
+
+    // Construct the DOM structure
+    itemImageContainer.appendChild(itemImage);
+    itemDetails.appendChild(itemName);
+    itemDetails.appendChild(itemColor);
+    removeButtonContainer.appendChild(removeButton);
+    itemDetails.appendChild(removeButtonContainer);
+    listItem.appendChild(itemImageContainer);
+    listItem.appendChild(itemDetails);
+
+
+    updateCartCount(); // Update the cart count badge
+
+
+    return listItem;
+  }
+  // Function to add a new item to the sidebar
+  function addItemToSidebar(name, color, img, index) {
+    const sidebarContent = document.getElementById('sidebarContent');
+    const newItem = createNewItem(name, color, img, index);
+    sidebarContent.appendChild(newItem);
+  }
+
+  function closeSidebar() {
+    const sidebar = document.querySelector('.fixed.inset-0.overflow-hidden');
+    const backdrop = document.querySelector('.bg-gray-500.bg-opacity-75');
+
+    sidebar.classList.add('hidden');
+    backdrop.classList.add('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    rerender()
+  });
+
+
+
+
+  // This will enable cart icon
+  const cartIcon = document.getElementById('cartIcon');
+  // const cartPartial = document.querySelector('.relative.z-10'); // Assuming the cartPartial has these classes
+
+  cartIcon.addEventListener('click', function (event) {
+    showSidebar();
+  });
+
+
+  function getCartItems() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  function updateCartCount() {
+    const cartItems = getCartItems(); // Replace with your logic to get cart items
+    const itemCount = cartItems.length;
+
+    const cartCountBadge = document.getElementById('cartCountBadge');
+    cartCountBadge.textContent = itemCount;
+  }
+
+  // Call initially to set the count
+  updateCartCount(); 
+</script>

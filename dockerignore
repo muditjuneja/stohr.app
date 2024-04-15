@@ -1,0 +1,8 @@
+node_modules
+.cache
+.public
+fit-overview-384420-4508ee497699.json
+*/venv/*
+_site
+__pycache__
+venv

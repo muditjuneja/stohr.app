@@ -1,0 +1,23 @@
+# Running as a script in the terminal
+# python main.py --credentials fit-overview-384420-4508ee497699.json --spreadsheet_id 15FFsH49Aqe4m1JpEKwxMBTX7BJF0aWLkgQzxiP0JTzg
+
+# Running as flask server
+# export FLASK_APP=main.py
+# flask run
+
+
+
+# Notes
+# 1. We have an endpoint /update-sheets which will build the site when endpoint is hit
+    # This will be used to build the site
+    # This should deploy the site to vercel??
+# 2. We have an endpoint /submit-query which will submit the query to the sheet
+
+
+
+# export CREDENTIALS_FILE=./fit-overview-384420-4508ee497699.json
+# docker run -v ./fit-overview-384420-4508ee497699.json:/app/credentials.json -e SPREADSHEET_ID=15FFsH49Aqe4m1JpEKwxMBTX7BJF0aWLkgQzxiP0JTzg -p 8002:80 -p 8000:8000 sheet2shop
+# docker run -p 8002:80 -p 8000:8000 sheet2shop 01bb7fd2a616
+# docker build . -t "sheet2shop"
+# docker run -v ./fit-overview-384420-4508ee497699.json:/app/credentials.json -e SPREADSHEET_ID=15FFsH49Aqe4m1JpEKwxMBTX7BJF0aWLkgQzxiP0JTzg -p 3000:3000 -p 8003:8003 sheet2shop
+# docker run -d -v ./credentials.json:/app/credentials.json -e SPREADSHEET_ID=15FFsH49Aqe4m1JpEKwxMBTX7BJF0aWLkgQzxiP0JTzg -p 3000:3000 -p 8003:8003 sheet2shop

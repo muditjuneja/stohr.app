@@ -1,0 +1,32 @@
+---
+pagination:
+  data: categories
+  size: 1
+  alias: category
+layout: layout.njk
+permalink: "category/{{ category.slug }}/"
+---
+
+<section class="bg-white py-8">
+
+  <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12">
+
+    <nav id="store" class="w-full z-5 top-0 px-6 py-1">
+      <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ category.name }}</h2>
+          {% if category.description %}
+          <p class="mt-2 text-lg leading-8 text-gray-600">{{category.description}}</p>
+          {% endif%}
+        </div>
+      </div>
+    </nav>
+
+    {# <div class="gap-x-8 gap-y-16 border-t border-gray-200 pt-10">
+    </div> #}
+    {%- for product in category.products -%}
+    {% include "productItemPartial.njk" %}
+    {%- endfor -%}
+  </div>
+
+</section>
