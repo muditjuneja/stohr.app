@@ -66,7 +66,7 @@ Stohr's core mission is to empower you to focus on your *business* rather than f
 
 Stohr is an open-source project driven by its users. We welcome your contributions, feedback, and ideas!
 
-* **GitHub Repository:** [[invalid URL removed]]
+* **Repository:** [https://github.com/muditjuneja/stohr.app/](https://github.com/muditjuneja/stohr.app/)
 * **Discussions:** (Consider a forum or dedicated Discord channel)
 * **Report Issues:** [Include a link to the Issue Tracker on your repo]
 
